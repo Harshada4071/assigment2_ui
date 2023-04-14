@@ -2,10 +2,10 @@
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
-        
+        <Panel backgroundDesign="Translucent">
     	<List
 		showSeparators="Inner"
-		items="{/userdata}" >
+		items="{/userdata}"  id="list">
 		<FeedListItem
 			sender="{username}"
 			timestamp="{Date}"
@@ -13,26 +13,14 @@
 			iconDensityAware="false"
 			convertLinksToAnchorTags="All"
             type="Navigation"
-            press="onLineItemPress"/>
+            press="onLineItemPress" />
 	</List>
-<!-- <Panel >
-<List
-		
-		headerText="Chat Box"
-		items="{/userdata}">
-		<items>
-			<StandardListItem
-				type="Active"
-				title="{username}"
-				press="onLineItemPress" 
-				description="{text}"/>
-		</items>
-	</List>
-</Panel> -->
+
         	<Label class="sapUiSmallMarginTop sapUiTinyMarginBottom" id="label"/>
 	<FeedInput
 		post="onPost"
 		showIcon="true" 
 		id="inputValue"/>
+			</Panel>
     </Page>
 </mvc:View>

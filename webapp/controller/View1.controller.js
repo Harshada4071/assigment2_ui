@@ -1,22 +1,25 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/format/DateFormat"
-    // "sap/ui/model/Filter"
+    "sap/ui/core/format/DateFormat",
+    "sap/m/Dialog",
+    "sap/m/Text",
+    "sap/m/Button"
+
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel,DateFormat) {
+    function (Controller, JSONModel, DateFormat,Dialog,Text,Button) {
         "use strict";
 
         var Data =
         {
             "userdata": [{
 
-                "username": "Harshada",
-                "Date":"April 05 2013",
-                "Text":"Hello"
+                "username": "Harshada ",
+                "Date": "Apr 14, 2023, 5:15:40 PM ",
+                "Text": "Hello!"
 
             }]
         }
@@ -37,14 +40,13 @@ sap.ui.define([
                 // create new entry
 
                 var sValue = oEvent.getParameter("value");
-                // var oFilterusername = new Filter(sValue,sap.ui.model.FilterOperator.EndsWith, "-"), 
-                // oFiltertext = new sap.ui.model.Filter(sValue,sap.ui.model.FilterOperator.StartsWith, "-");
                 var oEntry = {
-                    username: "Harshada",
-                    Date: "" + sDate,
-                    Text:sValue
+                        username: "Harshada",
+                        Date: "" + sDate,
+                        Text: sValue
+                    
                 };
-
+                
                 // update model
                 var oModel = this.getView().getModel();
                 var aEntries = oModel.getData().userdata;
@@ -52,18 +54,7 @@ sap.ui.define([
                 oModel.setData({
                     userdata: aEntries
                 });
-                // var oInput = this.getView().byId("inputValue").getValue();
-                // var bindedPath = oEvent.getSource();
-                // var data = this.getView().getModel().getObject(bindedPath);
-                // var resp = [];
-                //     resp.push(oInput);
-                //     var response = {
-                //         userdata: resp[0] 
-                //     };
-                //     var oJSonModel = new sap.ui.model.json.JSONModel(response);
-                //     oJSonModel.setData(response);
-                //     // console.log(oJSonModel);
-                //     this.getView().setModel(oJSonModel);
+               
             },
             onLineItemPress:function(oEvent){
                 var bindedPath = oEvent.getSource().getBindingContext().getPath();
@@ -73,7 +64,8 @@ sap.ui.define([
                         id: "idDialog",
                         title: "Display User Details",
                         content: new Text({
-                            text: "{username}"
+                            text: "Name : {username} "+"\n"+"Message : {Text}"+"\n"+"Date : {Date}",
+                            
                         }),
                         endButton: new Button({
                             text: "Cancel",
@@ -83,6 +75,9 @@ sap.ui.define([
                         })
                     });
                 }
+                this.oDialog.setBindingContext(oEvent.getSource().getBindingContext());
+                this.getView().addDependent(this.oDialog);
+                this.oDialog.open();
             }
 
         });
